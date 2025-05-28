@@ -405,7 +405,7 @@ praktikan2:praktikan2
 
 - **Code:**
 
-Dengan menggunakan perintah `make menuconfig` kita mengubah beberapa settingan ui input terminal agar sama dengan terminal input default linux kita:
+Dengan menggunakan perintah `make menuconfig` kita mengubah beberapa settingan ui input terminal agar sama dengan terminal input linux utama kita:
 ```
 -> Device Drivers > Character devices > Serial drivers > 8250/16550 and compatible serial support
 ```
@@ -468,17 +468,71 @@ Dengan settingan -nographic, semuanya dipindah ke serial console (/dev/ttyS0) se
 **Answer:**
 
 - **Code:**
+   ```bash
+   cd osboot
+   ```
+   
+   ```bash
+   mkdir -p mylinuxiso/boot/grub
+   ```
 
-  `put your answer here`
+   ```bash
+   cp bzImage mylinuxiso/boot
+   cp myramdisk.gz mylinuxiso/boot
+   ```
 
+   ```cfg
+   set timeout=5
+   set default=0
+
+   menuentry "MyLinux" {
+     linux /boot/bzImage
+     initrd /boot/myramdisk.gz
+   }
+   ```
+
+   ```bash
+   grub-mkrescue -o mylinux.iso mylinuxiso
+   ```
+
+```qemu-system-x86_64   -smp 2   -m 256   -display curses   -vga std   -cdrom mylinux.iso -nographic 
+```
 - **Explanation:**
+**Masuk ke direktori `osboot`**:
+   ```bash
+   cd osboot
+   ```
+**Buat struktur direktori ISO**:
+   ```bash
+   mkdir -p mylinuxiso/boot/grub
+   ```
+**Salin file kernel dan root filesystem**:
+   ```bash
+   cp bzImage mylinuxiso/boot
+   cp myramdisk.gz mylinuxiso/boot
+   ```
+**Buat file konfigurasi GRUB**:
+  Buat file `grub.cfg` di `mylinuxiso/boot/grub` dengan isi:
+     ```cfg
+   set timeout=5
+   set default=0
 
-  `put your answer here`
-
+   menuentry "MyLinux" {
+     linux /boot/bzImage
+     initrd /boot/myramdisk.gz
+   }
+   ```
+     > File ini akan membuat menu GRUB yang menampilkan pilihan boot bernama "MyLinux", dan mengarahkan sistem untuk menggunakan kernel dan initrd yang sudah kita sediakan.
+**Buat file ISO bootable**:
+ 
+   ```bash
+   grub-mkrescue -o mylinux.iso mylinuxiso
+   ```
+**Boot iso dengan menggunakan qemu dengan settingan agar seperti terminal linux utama**:
+``` qemu-system-x86_64   -smp 2   -m 256   -display curses   -vga std   -cdrom mylinux.iso -nographic```
 - **Screenshot:**
-
-  `put your answer here`
-
+![after](https://drive.google.com/uc?id=1__qyQXhE5viz55ltgGDaeNJomVmbE4te)
+![after](https://drive.google.com/uc?id=1uJ51gOgxJSzsVC0xwWIg8NsCRAY0LSLj)
 ---
 
 Pada akhirnya sistem operasi Budiman yang telah kamu buat dengan susah payah dikumpulkan ke Dosen mengatasnamakan Budiman. Kamu tidak diberikan credit apapun. Budiman pun tidak memberikan kata terimakasih kepadamu. Kamupun kecewa tetapi setidaknya kamu telah belajar untuk menjadi pembuat sistem operasi sederhana yang andal. Selamat!
