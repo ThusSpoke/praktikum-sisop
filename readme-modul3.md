@@ -413,7 +413,7 @@ praktikan2:praktikan2
 
 - **Screenshot:**
 
-  `put your answer here`
+![after](https://drive.google.com/uc?id=1E5FAwG1OWip4shd1FY4hdu-QfrFmQyyO)
 
 ### Soal 9
 
