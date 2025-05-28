@@ -407,12 +407,12 @@ praktikan2:praktikan2
 
 Dengan menggunakan perintah `make menuconfig` kita mengubah beberapa settingan ui input terminal agar sama dengan terminal input default linux kita:
 `
--> Device Drivers > Character devices > Serial drivers > 8250/16550 and compatible serial support   
--> Device Drivers > Character devices > Serial drivers > 8250/16550 and compatible serial support > Support 8250_core.* kernel options (DEPRECATED)   
+-> Device Drivers > Character devices > Serial drivers > 8250/16550 and compatible serial support``   
+-> Device Drivers > Character devices > Serial drivers > 8250/16550 and compatible serial support > Support 8250_core.* kernel options (DEPRECATED)``   
 -> Device Drivers > Character devices > Serial drivers > 8250/16550 and compatible serial support > Console on 8250/16550 and compatible serial port 
 `
-setelah itu, kita menjalankan qemu dengan pengaturan:
 
+setelah itu, kita menjalankan qemu dengan pengaturan:
 `qemu-system-x86_64 -smp 2 -m 256 -display curses -vga std -kernel bzImage -initrd myramdisk.gz -nographic -append "console=ttyS0"`
 
 - **Explanation:**
