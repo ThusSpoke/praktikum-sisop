@@ -433,8 +433,7 @@ Fungsi `-> Device Drivers > Character devices > Serial drivers > 8250/16550 and 
 
 *qemu setting explanation:*
 
-Dengan settingan -nographic, semuanya dipindah ke serial console (/dev/ttyS0) secara langsung.
-console=ttyS0 memberi tahu kernel untuk menggunakan ttyS0 (port serial pertama) sebagai console utama.
+Dengan settingan -nographic, semuanya dipindah ke serial console (/dev/ttyS0) secara langsung. sedangkan, console=ttyS0 memberi tahu kernel untuk menggunakan ttyS0 (port serial pertama) sebagai console utama.
 
 - **Screenshot:**
 
