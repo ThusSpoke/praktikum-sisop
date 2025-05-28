@@ -405,15 +405,36 @@ praktikan2:praktikan2
 
 - **Code:**
 
-  `put your answer here`
+Dengan menggunakan perintah `make menuconfig` kita mengubah beberapa settingan ui input terminal agar sama dengan terminal input default linux kita:
+`
+-> Device Drivers > Character devices > Serial drivers > 8250/16550 and compatible serial support   
+-> Device Drivers > Character devices > Serial drivers > 8250/16550 and compatible serial support > Support 8250_core.* kernel options (DEPRECATED)   
+-> Device Drivers > Character devices > Serial drivers > 8250/16550 and compatible serial support > Console on 8250/16550 and compatible serial port 
+`
+setelah itu, kita menjalankan qemu dengan pengaturan:
+
+`qemu-system-x86_64 -smp 2 -m 256 -display curses -vga std -kernel bzImage -initrd myramdisk.gz -nographic -append "console=ttyS0"`
 
 - **Explanation:**
 
-  `put your answer here`
+*config explanation:*
+
+Fungsi `-> Device Drivers > Character devices > Serial drivers > 8250/16550 and compatible serial support` adalah: 
+Mengaktifkan dukungan untuk UART serial driver 8250/16550 (seri chipset yang umum dipakai di sistem x86 dan embedded). sehingga, Kernel mampu mengakses dan menggunakan port serial yang menggunakan chip ini (misalnya /dev/ttyS0, /dev/ttyS1, dll).
+
+Fungsi `-> Device Drivers > Character devices > Serial drivers > 8250/16550 and compatible serial support > Support 8250_core.* kernel options (DEPRECATED)` adalah:
+Kernel bisa pakai 8250_core.nr_uarts=* untuk membuat ttyS0 dan seterusnya.
+
+Fungsi `-> Device Drivers > Character devices > Serial drivers > 8250/16550 and compatible serial support > Console on 8250/16550 and compatible serial port` adalah:
+
+*qemu setting explanation:*
+
+Dengan settingan -nographic, semuanya dipindah ke serial console (/dev/ttyS0) secara langsung.
+console=ttyS0 memberi tahu kernel untuk menggunakan ttyS0 (port serial pertama) sebagai console utama.
 
 - **Screenshot:**
 
-  `put your answer here`
+![after](https://drive.google.com/uc?id=1E5FAwG1OWip4shd1FY4hdu-QfrFmQyyO)
 
 ### Soal 9
 
