@@ -449,15 +449,95 @@ Dengan settingan -nographic, semuanya dipindah ke serial console (/dev/ttyS0) se
 
 - **Code:**
 
-  `put your answer here`
+  ```
+  cp /bin/nano myramdisk/bin/
+  ```
+
+  ```
+  mkdir -p myramdisk/{lib,lib64}
+  ```
+
+  ```
+  mkdir -p myramdisk/lib/x86_64-linux-gnu
+cp /lib/x86_64-linux-gnu/libncursesw.so.6 myramdisk/lib/x86_64-linux-gnu/
+cp /lib/x86_64-linux-gnu/libtinfo.so.6 myramdisk/lib/x86_64-linux-gnu/
+cp /lib/x86_64-linux-gnu/libc.so.6 myramdisk/lib/x86_64-linux-gnu/
+cp /lib64/ld-linux-x86-64.so.2 myramdisk/lib64/
+  ```
+
+  ```
+mkdir -p myramdisk/lib/terminfo/v
+cp /lib/terminfo/v/vt100 myramdisk/lib/terminfo/v/
+  ```
+
+  ```
+chmod +x myramdisk/bin/nano
+  ```
+
+  ```
+cd myramdisk 
+find . | cpio -oHnewc | gzip > ../myramdisk.gz
+  ```
 
 - **Explanation:**
 
-  `put your answer here`
+**Copy nano dari linux ke mini linux**:
+```
+cp /bin/nano myramdisk/bin/
+```
 
+**Membuat folder lib dan lib64 yang nanti akan dimasukki oleh dpendensi dari nano**:
+
+```
+mkdir -p myramdisk/{lib,lib64}
+```
+**Mengkopi dependensi dari nano ke dalam kedua folder tadi**:
+```
+mkdir -p myramdisk/lib/x86_64-linux-gnu
+cp /lib/x86_64-linux-gnu/libncursesw.so.6 myramdisk/lib/x86_64-linux-gnu/
+cp /lib/x86_64-linux-gnu/libtinfo.so.6 myramdisk/lib/x86_64-linux-gnu/
+cp /lib/x86_64-linux-gnu/libc.so.6 myramdisk/lib/x86_64-linux-gnu/
+cp /lib64/ld-linux-x86-64.so.2 myramdisk/lib64/
+```
+Note: dependensi ini dapat dicari dengan syntax
+```
+ldd /bin/nano
+```
+
+**copy vt100 ke dalam myramdisk karena nano butuh ini untuk bekerja**:
+```
+mkdir -p myramdisk/lib/terminfo/v
+cp /lib/terminfo/v/vt100 myramdisk/lib/terminfo/v/
+```
+Note: mencari vt100 bisa menggunakan `find /lib/terminfo -name "vt100"`
+
+**Mengubah izin nano agar bisa mengedit file**:
+```
+chmod +x myramdisk/bin/nano
+```
+
+**Rebuild iniramfs**:
+```
+cd myramdisk 
+find . | cpio -oHnewc | gzip > ../myramdisk.gz
+```
+
+**Jalankan qemu dengan settingan nomor 8 agar menampilkan tampilan terminal**:
+```
+qemu-system-x86_64 \
+-smp 2 \
+-m 256 \
+-nographic \
+-kernel bzImage \
+-initrd myramdisk.gz \
+-nographic \
+-append "console=ttyS0"
+```
 - **Screenshot:**
 
-  `put your answer here`
+![after](https://drive.google.com/uc?id=1O9aVx8s66tKJBSjWje3eoNk47H7uq8So)
+![after](https://drive.google.com/uc?id=1O9aVx8s66tKJBSjWje3eoNk47H7uq8So)
+![after](https://drive.google.com/uc?id=19CAAg3DDb9U2NG7WFh4qWrhm_8MDhvzo)
 
 ### Soal 10
 
